@@ -1,6 +1,5 @@
 module "alb" {
-  #source = "terraform-aws-modules/alb/aws"
-  source  = "terraform-aws-modules/alb/aws"
+  source = "terraform-aws-modules/alb/aws"
   internal = true
 
 # expense-dev-app-alb
