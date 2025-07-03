@@ -218,3 +218,25 @@ resource "aws_security_group_rule" "web_alb_https" {
   cidr_blocks              = ["0.0.0.0/0"]
   security_group_id        = module.web_alb_sg.sg_id
 }
+
+# app-alb should accept traffic from frontend resources on port 80
+
+resource "aws_security_group_rule" "app_alb_frontend" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.frontend_sg.sg_id
+  security_group_id        = module.app_alb_sg.sg_id
+}
+
+# frontend should accept traffic from web-alb on port 80
+
+resource "aws_security_group_rule" "frontend_web_alb" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.web_alb_sg.sg_id
+  security_group_id        = module.frontend_sg.sg_id
+}
