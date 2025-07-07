@@ -240,3 +240,14 @@ resource "aws_security_group_rule" "frontend_web_alb" {
   source_security_group_id = module.web_alb_sg.sg_id
   security_group_id        = module.frontend_sg.sg_id
 }
+
+# frontend accepting connecting from public on port 22
+# Usually you should configure frontend using private ip from VPN only
+resource "aws_security_group_rule" "frontend_public" {
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  cidr_blocks              = ["0.0.0.0/0"]
+  security_group_id        = module.frontend_sg.sg_id
+}
