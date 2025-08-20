@@ -83,6 +83,7 @@ resource "aws_lb_target_group" "frontend" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = local.vpc_id
+  deregistration_delay = 60
 
   health_check {
     healthy_threshold   = 2
@@ -142,7 +143,7 @@ resource "aws_autoscaling_group" "frontend" {
   }
 
   timeouts {
-    delete = "5m"
+    delete = "10m"
   }
 
   tag {
